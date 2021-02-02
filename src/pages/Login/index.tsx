@@ -20,7 +20,6 @@ const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(async (data) => {
-    console.log('sfsdfsd');
     try {
       // limpando error de formulario
       formRef.current?.setErrors({});
@@ -39,10 +38,8 @@ const Login: React.FC = () => {
         abortEarly: false,
       });
 
-      console.log(data);
       /* */
     } catch (err) {
-      console.log(err);
       /* */
       if (err instanceof yup.ValidationError) {
         const errorMessages: Errors = {};

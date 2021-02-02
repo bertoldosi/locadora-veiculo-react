@@ -1,24 +1,17 @@
-import styled from 'styled-components';
-import Tooltip from '../Tooltip';
+import styled, { css } from 'styled-components';
 
-interface ContainerProps {
-  isFilled: boolean;
-  isFocused: boolean;
-  isErrored: boolean;
+interface PropsError {
+  isError: boolean;
 }
 
-export const Container = styled.div`
+export const Container = styled.div<PropsError>`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 16px;
 
-  & + & {
-    margin-top: 16px;
-    margin-bottom: 24px;
-  }
-
-  span {
+  > span {
     width: 55px;
     padding: 0.475rem 1rem;
     font-size: 0.875rem;
@@ -28,45 +21,67 @@ export const Container = styled.div`
     border: 2px solid #ced4da;
     border-radius: 4px 0 0 4px;
 
-    svg {
-      margin-bottom: 0;
-    }
+    ${(props) =>
+      props.isError &&
+      css`
+        border: 2px solid red;
+        border-radius: 4px 0 0 4px;
+      `}
+
+    ${(props) =>
+      props.isError &&
+      css`
+        svg {
+          color: red;
+        }
+      `}
   }
 
-  div {
+  > div {
     display: flex;
+    position: relative;
     align-items: center;
     border: 2px solid #ced4da;
     border-left: none;
     border-radius: 0 4px 4px 0;
 
+    ${(props) =>
+      props.isError &&
+      css`
+        border: 2px solid red;
+        border-left: none;
+      `}
+
     input {
       min-width: 150px;
       width: 100%;
-      padding: 0.575rem 0.3rem;
+      padding: 0.375rem 0.8rem;
       border: none;
-      margin: 0;
 
       &::placeholder {
         color: #666360;
         font-size: 15px;
       }
     }
-  }
-`;
 
-export const Error = styled(Tooltip)`
-  height: 20px;
-  margin-left: 16px;
-  svg {
-    margin: 0;
-  }
-  span {
-    position: absolute;
-    background: #c53030;
-    color: #ffffff;
-    &::before {
-      border-color: #c53030 transparent;
+    svg {
+      position: absolute;
+      right: -5%;
+      opacity: 0;
+      visibility: hidden;
+      background-color: red;
+      border-radius: 50%;
+      color: white;
+      transition: 1s;
     }
+
+    ${(props) =>
+      props.isError &&
+      css`
+        svg {
+          opacity: 1;
+          visibility: visible;
+        }
+      `}
   }
 `;

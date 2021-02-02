@@ -1,10 +1,8 @@
 import { createStore, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import calcularReducer from './Calcular/calcular.reducer';
 
 const rootReducer = combineReducers({
-  calcular: calcularReducer,
 });
 
 const persistedReducer = persistReducer(

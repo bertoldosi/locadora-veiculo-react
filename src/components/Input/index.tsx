@@ -1,9 +1,14 @@
 import React, { InputHTMLAttributes, useRef, useEffect } from 'react';
+import "bootstrap/dist/css/bootstrap.css";
 import { IconBaseProps } from 'react-icons/lib';
-import { FiAlertCircle } from 'react-icons/fi';
+import { FiXCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
+import ReactTooltip from "react-tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
-import { Container, Error } from './styles';
+
+import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -21,16 +26,15 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
       path: 'value',
     });
   }, [fieldName, registerField]);
+
   return (
-    <Container>
+    <Container isError={!!error}>
       <span>{Icon && <Icon size={20} />}</span>
       <div>
-        <input ref={inputRef} {...rest} />
-        {error && (
-          <Error title={error}>
-            <FiAlertCircle color="#c53030" size={20} />
-          </Error>
-        )}
+          <input ref={inputRef} {...rest} />
+        <OverlayTrigger placement="top" overlay={<Tooltip id='registerTip'>{ error}</Tooltip>}>
+            <FiXCircle data-tip data-for="registerTip" size={20} />
+          </OverlayTrigger>
       </div>
     </Container>
   );
