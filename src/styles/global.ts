@@ -42,9 +42,20 @@ export default createGlobalStyle`
     font-family: "Inter", sans-serif;
     font-size: 16px;
   }
-  h1, h2, h3, h4, h5, h6, strong{
+  h1, h2, h3, h4, h5, h6, strong, ul{
+    margin: 0;
     font-weight: 500;
   }
+
+  li{
+    list-style:none;
+  }
+
+  a {
+      color: white;
+      text-decoration: none;
+  }
+
   button{
     cursor: pointer;
   }

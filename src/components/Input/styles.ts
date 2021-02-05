@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 
 interface PropsError {
+  isFilled: boolean;
+  isFocused: boolean;
   isError: boolean;
 }
 
@@ -29,12 +31,20 @@ export const Container = styled.div<PropsError>`
       `}
 
     ${(props) =>
-      props.isError &&
+      props.isFocused &&
       css`
-        svg {
-          color: red;
-        }
+        border: 2px solid var(--bs-blue);
+        color: var(--bs-blue);
+        border-radius: 4px 0 0 4px;
       `}
+
+    svg {
+      ${(props) =>
+        props.isError &&
+        css`
+          color: red;
+        `}
+    }
   }
 
   > div {
@@ -46,11 +56,20 @@ export const Container = styled.div<PropsError>`
     border-radius: 0 4px 4px 0;
 
     ${(props) =>
+      props.isFilled &&
+      css`
+        border: 2px solid #ced4da;
+        border-left: none;
+      `}
+
+    ${(props) =>
       props.isError &&
       css`
         border: 2px solid red;
         border-left: none;
       `}
+
+
 
     input {
       min-width: 150px;
@@ -73,15 +92,13 @@ export const Container = styled.div<PropsError>`
       border-radius: 50%;
       color: white;
       transition: 1s;
-    }
 
-    ${(props) =>
-      props.isError &&
-      css`
-        svg {
+      ${(props) =>
+        props.isError &&
+        css`
           opacity: 1;
           visibility: visible;
-        }
-      `}
+        `}
+    }
   }
 `;

@@ -5,12 +5,16 @@ import { FormHandles } from '@unform/core';
 
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+
 import { Container, Card } from './styles';
 
 import Input from '../../components/Input';
 
 import LogoDark from '../../assets/logo-dark.svg';
 import Button from '../../components/Button';
+import { Login as Logon } from '../../utils/auth';
 
 interface Errors {
   [key: string]: string;
@@ -18,6 +22,8 @@ interface Errors {
 
 const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
+  const { addToast } = useToasts();
 
   const handleSubmit = useCallback(async (data) => {
     try {
@@ -37,6 +43,24 @@ const Login: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      // realizar o login
+      const x = Logon(data.email, data.senha);
+      if (x == true) {
+        addToast('Login foi realizado com sucesso!', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        setTimeout(() => {
+          history.push('/dashboard');
+        }, 2000);
+      } else {
+        addToast('Login ou senha incorreto! Verefique suas credenciais.', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
 
       /* */
     } catch (err) {
